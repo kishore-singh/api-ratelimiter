@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- xmlns:util="http://www.springframework.org/schema/util"> -->
+
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="userTokenMap" class="java.util.concurrent.ConcurrentHashMap">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="com.mvc.datamodels.Token">
+			</map>
+		</constructor-arg>
+	</bean>
+	<bean id="userRequestsMap" class="java.util.concurrent.ConcurrentHashMap">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="java.util.concurrent.CopyOnWriteArrayList">
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="usagePolicyVoilatingUsers" class="java.util.concurrent.ConcurrentHashMap">
+		<constructor-arg>
+			<map key-type="java.lang.String" value-type="java.lang.Long">
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="10" />
+		<property name="queueCapacity" value="25" />
+	</bean>
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+
+
+	<!-- Commenting datasource for local build to work <bean name="dataSource" 
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"> <property 
+		name="driverClassName" value="${db.driverclassname}"/> <property name="url" 
+		value="${db.url}" /> <property name="username" value="${db.username}" /> 
+		<property name="password" value="${db.password}" /> </bean> -->
+
+</beans>
